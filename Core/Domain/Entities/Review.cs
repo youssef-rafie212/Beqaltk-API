@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Sieve.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Domain.Entities
 {
@@ -12,6 +13,7 @@ namespace Core.Domain.Entities
 
         [Range(1, 5)]
         [Required]
+        [Sieve(CanSort = true, CanFilter = true)]
         public int? ReviewRating { get; set; }
 
         [Required]

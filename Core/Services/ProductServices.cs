@@ -49,6 +49,11 @@ namespace Core.Services
             return product;
         }
 
+        public async Task<List<Product>> GetProductsBySearchString(string searchString)
+        {
+            return await _productRepo.GetProductsBySearchString(searchString);
+        }
+
         public async Task<Product> UpdateProduct(UpdateProductDto product)
         {
             await _helpers.ThrowIfProductDoesntExist(product.Id);

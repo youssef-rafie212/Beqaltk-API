@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Sieve.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Domain.Entities
 {
@@ -9,6 +10,7 @@ namespace Core.Domain.Entities
 
         [Required]
         [StringLength(120)]
+        [Sieve(CanSort = true, CanFilter = true)]
         public string? Name { get; set; }
 
         [Required]

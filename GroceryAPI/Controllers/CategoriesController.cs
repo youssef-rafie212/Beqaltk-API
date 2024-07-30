@@ -3,6 +3,8 @@ using Core.DTO.CategoryDtos;
 using Core.Services_contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sieve.Models;
+using Sieve.Services;
 
 namespace GroceryAPI.Controllers
 {
@@ -12,16 +14,19 @@ namespace GroceryAPI.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryServices _categoryServices;
+        private readonly ISieveProcessor _sieveProcessor;
 
-        public CategoriesController(ICategoryServices categoryServices)
+        public CategoriesController(ICategoryServices categoryServices, ISieveProcessor sieveProcessor)
         {
             _categoryServices = categoryServices;
+            _sieveProcessor = sieveProcessor;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] SieveModel sieveModel)
         {
-            return Ok(await _categoryServices.GetAllCategories());
+            List<Category> categories = await _categoryServices.GetAllCategories();
+            return Ok(_sieveProcessor.Apply(sieveModel, categories.AsQueryable()));
         }
 
         [HttpGet("{id}")]

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Sieve.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Core.Domain.Entities
 {
@@ -8,17 +9,21 @@ namespace Core.Domain.Entities
         public Guid Id { get; set; }
 
         [Required]
+        [Sieve(CanSort = true, CanFilter = true)]
         public string? Name { get; set; }
 
         [Required]
         public string? Weight { get; set; }
 
         [Range(0, 5)]
+        [Sieve(CanSort = true, CanFilter = true)]
         public int Rating { get; set; } = 0;
 
+        [Sieve(CanSort = true)]
         public int NumberOfRatings { get; set; } = 0;
 
         [Required]
+        [Sieve(CanSort = true)]
         public double Price { get; set; }
 
         [Url]

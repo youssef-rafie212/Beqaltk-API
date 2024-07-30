@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Sieve.Models;
+using Sieve.Services;
 using System.Text;
 namespace GroceryAPI
 {
@@ -25,30 +27,33 @@ namespace GroceryAPI
             // Handle the circular references
             options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
-            builder.Services.AddTransient<IJwtServices, JwtServices>();
-            builder.Services.AddTransient<IEmailSender, EmailSender>();
-            builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-            builder.Services.AddTransient<ICategoryServices, CategoryServices>();
-            builder.Services.AddTransient<ITokenRepository, TokenRepository>();
-            builder.Services.AddTransient<ICartItemRepository, CartItemRepository>();
-            builder.Services.AddTransient<ICartRepository, CartRepository>();
-            builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-            builder.Services.AddTransient<IFavouritesListItemRepository, FavouritesListItemRepository>();
-            builder.Services.AddTransient<IFavouritesListRepository, FavouritesListRepository>();
-            builder.Services.AddTransient<IOrderItemRepository, OrderItemRepository>();
-            builder.Services.AddTransient<IOrderRepository, OrderRepository>();
-            builder.Services.AddTransient<IProductRepository, ProductRepository>();
-            builder.Services.AddTransient<IReviewRepository, ReviewRepository>();
-            builder.Services.AddTransient<ICartItemServices, CartItemServices>();
-            builder.Services.AddTransient<ICartServices, CartServices>();
-            builder.Services.AddTransient<ICategoryServices, CategoryServices>();
-            builder.Services.AddTransient<IFavouritesListItemServices, FavouritesListItemServices>();
-            builder.Services.AddTransient<IFavouritesListServices, FavouritesListServices>();
-            builder.Services.AddTransient<IOrderItemServices, OrderItemServices>();
-            builder.Services.AddTransient<IOrderServices, OrderServices>();
-            builder.Services.AddTransient<IProductServices, ProductServices>();
-            builder.Services.AddTransient<IReviewServices, ReviewServices>();
-            builder.Services.AddTransient<ServicesHelpers>();
+            builder.Services.AddScoped<IJwtServices, JwtServices>();
+            builder.Services.AddScoped<IEmailSender, EmailSender>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<ICategoryServices, CategoryServices>();
+            builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+            builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddScoped<IFavouritesListItemRepository, FavouritesListItemRepository>();
+            builder.Services.AddScoped<IFavouritesListRepository, FavouritesListRepository>();
+            builder.Services.AddScoped<IOrderItemRepository, OrderItemRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
+            builder.Services.AddScoped<ICartItemServices, CartItemServices>();
+            builder.Services.AddScoped<ICartServices, CartServices>();
+            builder.Services.AddScoped<ICategoryServices, CategoryServices>();
+            builder.Services.AddScoped<IFavouritesListItemServices, FavouritesListItemServices>();
+            builder.Services.AddScoped<IFavouritesListServices, FavouritesListServices>();
+            builder.Services.AddScoped<IOrderItemServices, OrderItemServices>();
+            builder.Services.AddScoped<IOrderServices, OrderServices>();
+            builder.Services.AddScoped<IProductServices, ProductServices>();
+            builder.Services.AddScoped<IReviewServices, ReviewServices>();
+            builder.Services.AddScoped<ServicesHelpers>();
+            builder.Services.AddScoped<ISieveProcessor, SieveProcessor>();
+
+            builder.Services.Configure<SieveOptions>(builder.Configuration.GetSection("Sieve"));
 
             builder.Services.AddDbContext<AppDBContext>(opt =>
             {

@@ -40,6 +40,11 @@ namespace Infrastructure.Repositories
             return await _db.Products.FirstOrDefaultAsync(p => p.Id == productId);
         }
 
+        public async Task<List<Product>> GetProductsBySearchString(string searchString)
+        {
+            return await _db.Products.Where(p => p.Name!.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+        }
+
         public async Task<Product> UpdateProduct(Product product)
         {
             Product? productToUpdate = await GetProductById(product.Id);
