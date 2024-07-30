@@ -1,0 +1,36 @@
+# Ignore Visual Studio temporary files, build results
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Ignore other temporary and unnecessary files
+*.log
+*.tlog
+*.ide
+*.cache
+*.pdb
+*.ipch
+*.ilk
+*.obj
+*.pch
+*.idb
+*.pgc
+*.pgd
+*.rsp
+*.exp
+*.lib
+*.opendb
+*.vscode/

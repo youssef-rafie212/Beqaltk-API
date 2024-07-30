@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GroceryAPI", "GroceryAPI\GroceryAPI.csproj", "{27EFE79E-219B-4070-859C-0DC7D83736E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{803356AB-9F25-4C4A-969A-090BDD4066EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{D7BE3793-81B8-41B1-9FCD-CC27281D7652}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27EFE79E-219B-4070-859C-0DC7D83736E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27EFE79E-219B-4070-859C-0DC7D83736E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27EFE79E-219B-4070-859C-0DC7D83736E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27EFE79E-219B-4070-859C-0DC7D83736E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{803356AB-9F25-4C4A-969A-090BDD4066EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{803356AB-9F25-4C4A-969A-090BDD4066EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{803356AB-9F25-4C4A-969A-090BDD4066EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{803356AB-9F25-4C4A-969A-090BDD4066EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7BE3793-81B8-41B1-9FCD-CC27281D7652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7BE3793-81B8-41B1-9FCD-CC27281D7652}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7BE3793-81B8-41B1-9FCD-CC27281D7652}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7BE3793-81B8-41B1-9FCD-CC27281D7652}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2206444-0B89-4F8C-948D-6F75A70C4A39}
+	EndGlobalSection
+EndGlobal
