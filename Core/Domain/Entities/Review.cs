@@ -14,7 +14,7 @@ namespace Core.Domain.Entities
         [Range(1, 5)]
         [Required]
         [Sieve(CanSort = true, CanFilter = true)]
-        public int? ReviewRating { get; set; }
+        public int ReviewRating { get; set; }
 
         [Required]
         public Guid UserId { get; set; }

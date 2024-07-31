@@ -22,5 +22,12 @@ namespace Core.DTO.ProductDtos
 
         [Required]
         public Guid CategoryId { get; set; }
+
+        [Required]
+        [Range(0, 5)]
+        public int Rating { get; set; }
+
+        [Required]
+        public int NumberOfRatings { get; set; }
     }
 }

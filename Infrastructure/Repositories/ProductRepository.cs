@@ -53,6 +53,8 @@ namespace Infrastructure.Repositories
             productToUpdate!.Weight = product.Weight;
             productToUpdate!.CategoryId = product.CategoryId;
             productToUpdate!.ImgUrl = product.ImgUrl;
+            productToUpdate!.Rating = product.Rating;
+            productToUpdate!.NumberOfRatings = product.NumberOfRatings;
 
             await _db.SaveChangesAsync();
 

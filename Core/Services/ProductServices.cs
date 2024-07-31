@@ -67,6 +67,8 @@ namespace Core.Services
                 ImgUrl = product.ImgUrl,
                 CategoryId = product.CategoryId,
                 Weight = product.Weight,
+                Rating = product.Rating,
+                NumberOfRatings = product.NumberOfRatings,
             });
         }
     }

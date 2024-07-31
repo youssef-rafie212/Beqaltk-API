@@ -10,7 +10,7 @@ namespace Core.DTO.ReviewsDtos
 
         [Range(1, 5)]
         [Required]
-        public int? ReviewRating { get; set; }
+        public int ReviewRating { get; set; }
 
         [Required]
         public Guid UserId { get; set; }
