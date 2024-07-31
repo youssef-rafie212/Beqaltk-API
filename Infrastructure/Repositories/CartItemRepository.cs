@@ -36,6 +36,11 @@ namespace Infrastructure.Repositories
             return _db.CartItems.Where(c => c.CartId == cartId).ToList();
         }
 
+        public async Task<CartItem?> GetCartItemByCartAndProduct(Guid cartId, Guid productId)
+        {
+            return await _db.CartItems.FirstOrDefaultAsync(c => c.CartId == cartId && c.ProductId == productId);
+        }
+
         public async Task<CartItem?> GetCartItemById(Guid cartItemId)
         {
             return await _db.CartItems.FirstOrDefaultAsync(c => c.Id == cartItemId);

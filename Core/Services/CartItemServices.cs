@@ -9,11 +9,20 @@ namespace Core.Services
     public class CartItemServices : ICartItemServices
     {
         private readonly ICartItemRepository _cartItemRepo;
+        private readonly ICartRepository _cartRepo;
+        private readonly IProductRepository _productRepo;
         private readonly ServicesHelpers _helpers;
 
-        public CartItemServices(ICartItemRepository cartItemRepo, ServicesHelpers helpers)
+        public CartItemServices(
+            ICartItemRepository cartItemRepo,
+            ServicesHelpers helpers,
+            ICartRepository cartRepo,
+            IProductRepository productRepo
+            )
         {
             _cartItemRepo = cartItemRepo;
+            _cartRepo = cartRepo;
+            _productRepo = productRepo;
             _helpers = helpers;
         }
 
@@ -22,17 +31,63 @@ namespace Core.Services
             await _helpers.ThrowIfCartDoesntExist(cartItem.CartId);
             await _helpers.ThrowIfProductDoesntExist(cartItem.ProductId);
 
-            return await _cartItemRepo.CreateCartItem(new CartItem
+            // Check if cart item already exists in the related cart
+            CartItem? cartItemInCart = await _cartItemRepo.GetCartItemByCartAndProduct(cartItem.CartId, cartItem.ProductId);
+            Cart cart = (await _cartRepo.GetCartById(cartItem.CartId))!;
+            Product product = (await _productRepo.GetProductById(cartItem.ProductId))!;
+
+            // Update related cart total price
+            if (cartItemInCart == null)
             {
-                Id = Guid.NewGuid(),
-                ProductId = cartItem.ProductId,
-                CartId = cartItem.CartId,
-                Amount = cartItem.Amount
-            });
+                await _cartRepo.UpdateCart(new Cart
+                {
+                    Id = cart.Id,
+                    TotalPrice = cart.TotalPrice + (product.Price * cartItem.Amount),
+                });
+
+                return await _cartItemRepo.CreateCartItem(new CartItem
+                {
+                    Id = Guid.NewGuid(),
+                    ProductId = cartItem.ProductId,
+                    CartId = cartItem.CartId,
+                    Amount = cartItem.Amount
+                });
+            }
+            else
+            {
+                await _cartRepo.UpdateCart(new Cart
+                {
+                    Id = cart.Id,
+                    TotalPrice = cart.TotalPrice - (product.Price * cartItemInCart.Amount)
+                });
+                await _cartRepo.UpdateCart(new Cart
+                {
+                    Id = cart.Id,
+                    TotalPrice = cart.TotalPrice - (product.Price * (cartItemInCart.Amount + cartItem.Amount))
+                });
+
+                // Update the amount of the existing cart item
+                return await _cartItemRepo.UpdateCartItem(new CartItem()
+                {
+                    Id = cartItemInCart.Id,
+                    Amount = cartItemInCart.Amount + cartItem.Amount
+                });
+            }
         }
 
         public async Task<bool> DeleteCartItemById(Guid cartItemId)
         {
+            // Update related cart total price
+            CartItem? cartItem = await _cartItemRepo.GetCartItemById(cartItemId);
+            if (cartItem == null) return false;
+            Cart cart = (await _cartRepo.GetCartById(cartItem.CartId))!;
+            Product product = (await _productRepo.GetProductById(cartItem.ProductId))!;
+            await _cartRepo.UpdateCart(new Cart()
+            {
+                Id = cart.Id,
+                TotalPrice = cart.TotalPrice - (product.Price * cartItem.Amount),
+            });
+
             return await _cartItemRepo.DeleteCartItemById(cartItemId);
         }
 
@@ -51,6 +106,22 @@ namespace Core.Services
         public async Task<CartItem> UpdateCartItem(UpdateCartItemDto cartItem)
         {
             await _helpers.ThrowIfCartItemDoesntExist(cartItem.Id);
+
+            // Update related cart total price
+            CartItem cartItemInCart = (await _cartItemRepo.GetCartItemById(cartItem.Id))!;
+            Cart cart = (await _cartRepo.GetCartById(cartItemInCart.CartId))!;
+            Product product = (await _productRepo.GetProductById(cartItemInCart.CartId))!;
+            await _cartRepo.UpdateCart(new Cart
+            {
+                Id = cart.Id,
+                TotalPrice = cart.TotalPrice - (product.Price * cartItemInCart.Amount),
+            });
+            await _cartRepo.UpdateCart(new Cart
+            {
+                Id = cart.Id,
+                TotalPrice = cart.TotalPrice + (product.Price * cartItem.Amount),
+            });
+
             return await _cartItemRepo.UpdateCartItem(new CartItem()
             {
                 Id = cartItem.Id,

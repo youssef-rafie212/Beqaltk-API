@@ -36,5 +36,13 @@ namespace Infrastructure.Repositories
         {
             return await _db.Carts.FirstOrDefaultAsync(c => c.Id == userId);
         }
+
+        public async Task<Cart> UpdateCart(Cart cart)
+        {
+            Cart cartToUpdate = (await GetCartById(cart.Id))!;
+            cartToUpdate.TotalPrice = cart.TotalPrice;
+            await _db.SaveChangesAsync();
+            return (cartToUpdate);
+        }
     }
 }
