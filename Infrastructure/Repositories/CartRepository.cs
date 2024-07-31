@@ -29,12 +29,12 @@ namespace Infrastructure.Repositories
 
         public async Task<Cart?> GetCartById(Guid cartId)
         {
-            return await _db.Carts.FirstOrDefaultAsync(c => c.Id == cartId);
+            return await _db.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.Id == cartId);
         }
 
         public async Task<Cart> GetCartForUser(Guid userId)
         {
-            return await _db.Carts.FirstOrDefaultAsync(c => c.Id == userId);
+            return await _db.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.Id == userId);
         }
 
         public async Task<Cart> UpdateCart(Cart cart)

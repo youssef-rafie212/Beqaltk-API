@@ -30,12 +30,12 @@ namespace Infrastructure.Repositories
 
         public async Task<FavouritesList> GetFavouriteListForUser(Guid userId)
         {
-            return await _db.FavouritesLists.FirstOrDefaultAsync(f => f.UserId == userId);
+            return await _db.FavouritesLists.Include(f => f.FavouritesListItems).FirstOrDefaultAsync(f => f.UserId == userId);
         }
 
         public async Task<FavouritesList?> GetFavouritesListById(Guid favListId)
         {
-            return await _db.FavouritesLists.FirstOrDefaultAsync(f => f.Id == favListId);
+            return await _db.FavouritesLists.Include(f => f.FavouritesListItems).FirstOrDefaultAsync(f => f.Id == favListId);
         }
     }
 }

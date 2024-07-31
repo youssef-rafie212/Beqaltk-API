@@ -32,12 +32,12 @@ namespace Infrastructure.Repositories
 
         public List<Order> GetAllOrdersForUser(Guid userId)
         {
-            return _db.Orders.Where(o => o.UserId == userId).ToList();
+            return _db.Orders.Include(o => o.OrderItems).Where(o => o.UserId == userId).ToList();
         }
 
         public async Task<Order?> GetOrderById(Guid orderId)
         {
-            Order? order = await _db.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            Order? order = await _db.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == orderId);
             return order;
         }
 
