@@ -57,6 +57,7 @@ namespace Core.Services
                 Id = order.Id,
                 UserId = order.UserId,
                 Status = order.Status,
+                TotalPrice = order.TotalPrice,
             });
         }
     }

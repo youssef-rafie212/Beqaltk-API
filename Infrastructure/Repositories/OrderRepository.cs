@@ -47,6 +47,7 @@ namespace Infrastructure.Repositories
 
             orderToUpdate!.Status = order.Status;
             orderToUpdate!.UserId = order.UserId;
+            orderToUpdate!.TotalPrice = order.TotalPrice;
 
             await _db.SaveChangesAsync();
             return order;

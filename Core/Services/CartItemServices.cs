@@ -63,7 +63,7 @@ namespace Core.Services
                 await _cartRepo.UpdateCart(new Cart
                 {
                     Id = cart.Id,
-                    TotalPrice = cart.TotalPrice - (product.Price * (cartItemInCart.Amount + cartItem.Amount))
+                    TotalPrice = cart.TotalPrice + (product.Price * (cartItemInCart.Amount + cartItem.Amount))
                 });
 
                 // Update the amount of the existing cart item

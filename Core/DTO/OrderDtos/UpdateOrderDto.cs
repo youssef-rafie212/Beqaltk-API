@@ -11,6 +11,9 @@ namespace Core.DTO.OrderDtos
         [Required]
         public Guid UserId { get; set; }
 
+        [Required]
+        public int TotalPrice { get; set; }
+
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
     }
 }

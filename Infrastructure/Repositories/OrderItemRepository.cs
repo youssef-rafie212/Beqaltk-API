@@ -41,6 +41,11 @@ namespace Infrastructure.Repositories
             return await _db.OrderItems.FirstOrDefaultAsync(o => o.Id == orderItemId);
         }
 
+        public async Task<OrderItem?> GetOrderItemByOrderAndProduct(Guid orderId, Guid productId)
+        {
+            return await _db.OrderItems.FirstOrDefaultAsync(o => o.OrderId == orderId && o.ProductId == productId);
+        }
+
         public async Task<OrderItem> UpdateOrderItem(OrderItem orderItem)
         {
             OrderItem orderItemToUpdate = await _db.OrderItems.FirstOrDefaultAsync(o => o.Id == orderItem.Id);
