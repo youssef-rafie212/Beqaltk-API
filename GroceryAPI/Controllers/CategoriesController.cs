@@ -46,7 +46,6 @@ namespace GroceryAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Post(CreateCategoryDto createCategoryDto)
         {
             return Ok(await _categoryServices.CreateCategory(createCategoryDto));
@@ -54,7 +53,6 @@ namespace GroceryAPI.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Put(Guid id, UpdateCategoryDto updateCategoryDto)
         {
             try

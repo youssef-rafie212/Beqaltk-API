@@ -40,6 +40,12 @@ namespace GroceryAPI.Controllers
             }
         }
 
+        [HttpGet("search/{searchString}")]
+        public async Task<IActionResult> Get(string searchString)
+        {
+            return Ok(await _services.GetProductsBySearchString(searchString));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post(CreateproductDto createproductDto)
         {
@@ -58,6 +64,7 @@ namespace GroceryAPI.Controllers
         {
             try
             {
+                updateProductDto.Id = id;
                 return Ok(await _services.UpdateProduct(updateProductDto));
             }
             catch (Exception ex)

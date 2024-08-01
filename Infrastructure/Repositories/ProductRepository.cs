@@ -42,7 +42,7 @@ namespace Infrastructure.Repositories
 
         public async Task<List<Product>> GetProductsBySearchString(string searchString)
         {
-            return await _db.Products.Where(p => p.Name!.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToListAsync();
+            return await _db.Products.Where(p => p.Name!.ToLower().Contains(searchString.ToLower())).ToListAsync();
         }
 
         public async Task<Product> UpdateProduct(Product product)
