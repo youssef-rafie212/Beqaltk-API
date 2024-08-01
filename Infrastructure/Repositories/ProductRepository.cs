@@ -1,7 +1,7 @@
 ﻿using Core.Domain.Entities;
 using Core.Domain.Repository_contracts;
 using Infrastructure.DB;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -37,7 +37,7 @@ namespace Infrastructure.Repositories
 
         public async Task<Product?> GetProductById(Guid productId)
         {
-            return await _db.Products.Include(p => p.Reviews).FirstOrDefaultAsync(p => p.Id == productId);
+            return await _db.Products.Include(p => p.Reviews).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == productId);
         }
 
         public async Task<List<Product>> GetProductsBySearchString(string searchString)

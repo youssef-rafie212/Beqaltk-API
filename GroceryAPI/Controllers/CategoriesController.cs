@@ -32,15 +32,21 @@ namespace GroceryAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            Category? category = await _categoryServices.GetCategoryById(id);
+            try
+            {
+                Category category = await _categoryServices.GetCategoryById(id);
 
-            if (category == null) return NotFound();
-
-            return Ok(category);
+                return Ok(category);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message, statusCode: 400);
+            }
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Post(CreateCategoryDto createCategoryDto)
         {
             return Ok(await _categoryServices.CreateCategory(createCategoryDto));
@@ -48,17 +54,19 @@ namespace GroceryAPI.Controllers
 
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Put(UpdateCategoryDto updateCategoryDto)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Put(Guid id, UpdateCategoryDto updateCategoryDto)
         {
             try
             {
+                updateCategoryDto.Id = id;
                 Category category = await _categoryServices.UpdateCategory(updateCategoryDto);
 
                 return Ok(category);
             }
             catch (Exception ex)
             {
-                return Problem(ex.Message);
+                return Problem(ex.Message, statusCode: 400);
             }
         }
 
@@ -68,7 +76,7 @@ namespace GroceryAPI.Controllers
         {
             bool deleted = await _categoryServices.DeleteCategoryById(id);
 
-            if (!deleted) return BadRequest("ID not found or invalid");
+            if (!deleted) return Problem("ID not found or invalid", statusCode: 400); ;
 
             return NoContent();
         }
