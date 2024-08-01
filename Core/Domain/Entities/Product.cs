@@ -30,6 +30,7 @@ namespace Core.Domain.Entities
         public string? ImgUrl { get; set; }
 
         [Required]
+        [Sieve(CanFilter = true)]
         public Guid CategoryId { get; set; }
 
         public Category? Category { get; set; }

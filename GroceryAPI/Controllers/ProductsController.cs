@@ -1,4 +1,5 @@
-﻿using Core.DTO.ProductDtos;
+﻿using Core.Domain.Entities;
+using Core.DTO.ProductDtos;
 using Core.Services_contracts;
 using Microsoft.AspNetCore.Mvc;
 using Sieve.Models;
@@ -22,7 +23,8 @@ namespace GroceryAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery] SieveModel sieveModel)
         {
-            return Ok(await _services.GetAllProducts());
+            List<Product> allProducts = await _services.GetAllProducts();
+            return Ok(_sieveProcessor.Apply(sieveModel, allProducts.AsQueryable()));
         }
 
         [HttpGet("{id}")]
