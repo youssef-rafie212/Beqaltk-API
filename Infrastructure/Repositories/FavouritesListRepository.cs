@@ -1,7 +1,7 @@
 ﻿using Core.Domain.Entities;
 using Core.Domain.Repository_contracts;
 using Infrastructure.DB;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
 
         public async Task<FavouritesList> GetFavouriteListForUser(Guid userId)
         {
-            return await _db.FavouritesLists.Include(f => f.FavouritesListItems).FirstOrDefaultAsync(f => f.UserId == userId);
+            return (await _db.FavouritesLists.Include(f => f.FavouritesListItems).FirstOrDefaultAsync(f => f.UserId == userId))!;
         }
 
         public async Task<FavouritesList?> GetFavouritesListById(Guid favListId)

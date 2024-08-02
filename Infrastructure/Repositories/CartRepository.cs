@@ -1,7 +1,7 @@
 ﻿using Core.Domain.Entities;
 using Core.Domain.Repository_contracts;
 using Infrastructure.DB;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -34,7 +34,7 @@ namespace Infrastructure.Repositories
 
         public async Task<Cart> GetCartForUser(Guid userId)
         {
-            return await _db.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.Id == userId);
+            return (await _db.Carts.Include(c => c.CartItems).FirstOrDefaultAsync(c => c.UserId == userId))!;
         }
 
         public async Task<Cart> UpdateCart(Cart cart)
