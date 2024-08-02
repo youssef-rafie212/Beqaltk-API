@@ -1,7 +1,7 @@
 ﻿using Core.Domain.Entities;
 using Core.Domain.Repository_contracts;
 using Infrastructure.DB;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -48,7 +48,7 @@ namespace Infrastructure.Repositories
 
         public async Task<OrderItem> UpdateOrderItem(OrderItem orderItem)
         {
-            OrderItem orderItemToUpdate = await _db.OrderItems.FirstOrDefaultAsync(o => o.Id == orderItem.Id);
+            OrderItem orderItemToUpdate = (await _db.OrderItems.FirstOrDefaultAsync(o => o.Id == orderItem.Id))!;
             orderItemToUpdate.Amount = orderItem.Amount;
 
             await _db.SaveChangesAsync();

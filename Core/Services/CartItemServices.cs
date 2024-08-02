@@ -110,7 +110,7 @@ namespace Core.Services
             // Update related cart total price
             CartItem cartItemInCart = (await _cartItemRepo.GetCartItemById(cartItem.Id))!;
             Cart cart = (await _cartRepo.GetCartById(cartItemInCart.CartId))!;
-            Product product = (await _productRepo.GetProductById(cartItemInCart.CartId))!;
+            Product product = (await _productRepo.GetProductById(cartItemInCart.ProductId))!;
             await _cartRepo.UpdateCart(new Cart
             {
                 Id = cart.Id,

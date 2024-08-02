@@ -46,7 +46,6 @@ namespace Infrastructure.Repositories
             Order? orderToUpdate = await _db.Orders.FirstOrDefaultAsync(o => o.Id == order.Id);
 
             orderToUpdate!.Status = order.Status;
-            orderToUpdate!.UserId = order.UserId;
             orderToUpdate!.TotalPrice = order.TotalPrice;
 
             await _db.SaveChangesAsync();

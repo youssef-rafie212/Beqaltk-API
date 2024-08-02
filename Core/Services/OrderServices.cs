@@ -49,13 +49,11 @@ namespace Core.Services
 
         public async Task<Order> UpdateOrder(UpdateOrderDto order)
         {
-            await _helpers.ThrowIfUserDoesntExist(order.UserId);
             await _helpers.ThrowIfOrderDoesntExist(order.Id);
 
             return await _orderRepo.UpdateOrder(new Order
             {
                 Id = order.Id,
-                UserId = order.UserId,
                 Status = order.Status,
                 TotalPrice = order.TotalPrice,
             });

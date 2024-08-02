@@ -1,7 +1,7 @@
 ﻿using Core.Domain.Entities;
 using Core.Domain.Repository_contracts;
 using Infrastructure.DB;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -48,11 +48,11 @@ namespace Infrastructure.Repositories
 
         public async Task<CartItem> UpdateCartItem(CartItem cartItem)
         {
-            CartItem cartItemToUpdate = await _db.CartItems.FirstOrDefaultAsync(c => c.Id == cartItem.Id);
+            CartItem cartItemToUpdate = (await _db.CartItems.FirstOrDefaultAsync(c => c.Id == cartItem.Id))!;
             cartItemToUpdate.Amount = cartItem.Amount;
 
             await _db.SaveChangesAsync();
-            return cartItem;
+            return cartItemToUpdate;
         }
     }
 }
