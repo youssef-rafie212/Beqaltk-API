@@ -1,7 +1,7 @@
 ﻿using Core.Domain.Entities;
 using Core.Domain.Repository_contracts;
 using Infrastructure.DB;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
@@ -42,13 +42,13 @@ namespace Infrastructure.Repositories
 
         public async Task<Review> UpdateReview(Review review)
         {
-            Review? reviewToUpdate = await _db.Reviews.FirstOrDefaultAsync(r => r.Id == review.Id);
+            Review reviewToUpdate = (await _db.Reviews.FirstOrDefaultAsync(r => r.Id == review.Id))!;
 
             reviewToUpdate.ReviewRating = review.ReviewRating;
             reviewToUpdate.ReviewText = review.ReviewText;
 
             await _db.SaveChangesAsync();
-            return review;
+            return reviewToUpdate;
         }
     }
 }
