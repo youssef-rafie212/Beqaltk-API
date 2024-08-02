@@ -1,10 +1,12 @@
 ﻿using Core.Services_contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GroceryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CartsController : ControllerBase
     {
         private readonly ICartServices _services;

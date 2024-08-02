@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
             orderToUpdate!.TotalPrice = order.TotalPrice;
 
             await _db.SaveChangesAsync();
-            return order;
+            return orderToUpdate;
         }
     }
 }

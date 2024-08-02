@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Entities;
 using Core.DTO.ProductDtos;
 using Core.Services_contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Sieve.Models;
 using Sieve.Services;
@@ -9,6 +10,7 @@ namespace GroceryAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductServices _services;
@@ -47,6 +49,7 @@ namespace GroceryAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(CreateproductDto createproductDto)
         {
             try
@@ -60,6 +63,7 @@ namespace GroceryAPI.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(Guid id, UpdateProductDto updateProductDto)
         {
             try
@@ -74,6 +78,7 @@ namespace GroceryAPI.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid id)
         {
             bool isDeleted = await _services.DeleteProductById(id);
