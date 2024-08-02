@@ -15,6 +15,8 @@ namespace GroceryAPI.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly ICartServices _cartServices;
+        private readonly IFavouritesListServices _favouritesListServices;
         private readonly IJwtServices _jwtServices;
         private readonly IEmailSender _emailSender;
 
@@ -23,6 +25,8 @@ namespace GroceryAPI.Controllers
              SignInManager<ApplicationUser> signInManager,
              RoleManager<ApplicationRole> roleManager,
              IJwtServices jwtServices,
+             ICartServices cartServices,
+             IFavouritesListServices favouritesListServices,
              IEmailSender emailSender
         )
         {
@@ -31,6 +35,8 @@ namespace GroceryAPI.Controllers
             _roleManager = roleManager;
             _jwtServices = jwtServices;
             _emailSender = emailSender;
+            _cartServices = cartServices;
+            _favouritesListServices = favouritesListServices;
         }
 
         [Route("[action]")]
@@ -76,8 +82,8 @@ namespace GroceryAPI.Controllers
                     }
                 }
 
-                // TODO: Create a cart
-                // TODO: Create a favourites list
+                await _cartServices.CreateCartForUser(user.Id);
+                await _favouritesListServices.CreateFavouritesListForUser(user.Id);
 
                 return Ok(await _jwtServices.GetJwtToken(user));
             }
