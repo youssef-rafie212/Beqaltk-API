@@ -52,7 +52,7 @@ namespace Infrastructure.Repositories
             orderItemToUpdate.Amount = orderItem.Amount;
 
             await _db.SaveChangesAsync();
-            return orderItem;
+            return orderItemToUpdate;
         }
     }
 }

@@ -110,7 +110,7 @@ namespace Core.Services
             // Update related order total price
             OrderItem orderItemInOrder = (await _orderItemRepo.GetOrderItemById(orderItem.Id))!;
             Order order = (await _orderRepository.GetOrderById(orderItemInOrder.OrderId))!;
-            Product product = (await _productRepository.GetProductById(orderItemInOrder.OrderId))!;
+            Product product = (await _productRepository.GetProductById(orderItemInOrder.ProductId))!;
             await _orderRepository.UpdateOrder(new Order
             {
                 Id = order.Id,
