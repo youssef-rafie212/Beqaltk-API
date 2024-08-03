@@ -54,7 +54,7 @@ namespace GroceryAPI
             builder.Services.AddScoped<IReviewServices, ReviewServices>();
             builder.Services.AddScoped<ServicesHelpers>();
             builder.Services.AddScoped<ISieveProcessor, SieveProcessor>();
-            builder.Services.AddScoped<IStripeServices, StripeServices>();
+            builder.Services.AddScoped<IPaymentsServices, PaymentsServices>();
 
             builder.Services.Configure<SieveOptions>(builder.Configuration.GetSection("Sieve"));
 

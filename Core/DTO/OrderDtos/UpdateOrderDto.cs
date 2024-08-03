@@ -9,7 +9,7 @@ namespace Core.DTO.OrderDtos
         public Guid Id { get; set; }
 
         [Required]
-        public int TotalPrice { get; set; }
+        public double TotalPrice { get; set; }
 
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
     }

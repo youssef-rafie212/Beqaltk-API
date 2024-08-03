@@ -10,6 +10,5 @@ namespace Core.Services_contracts
         Task<Order> CreateOrder(CreateOrderDto order);
         Task<Order> UpdateOrder(UpdateOrderDto order);
         Task<bool> DeleteOrderById(Guid orderId);
-        Task<string> ConfirmOrder(Guid orderId);
     }
 }
