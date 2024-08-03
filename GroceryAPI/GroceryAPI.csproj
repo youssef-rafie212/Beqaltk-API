@@ -24,6 +24,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Sieve" Version="2.5.5" />
+    <PackageReference Include="Stripe.net" Version="45.6.0" />
   </ItemGroup>
 
   <ItemGroup>

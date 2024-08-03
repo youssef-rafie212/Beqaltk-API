@@ -9,12 +9,21 @@ namespace Core.Services
     public class OrderServices : IOrderServices
     {
         private readonly IOrderRepository _orderRepo;
+        private readonly IStripeServices _stripeServices;
         private readonly ServicesHelpers _helpers;
 
-        public OrderServices(IOrderRepository orderRepo, ServicesHelpers helpers)
+        public OrderServices(IOrderRepository orderRepo, ServicesHelpers helpers, IStripeServices stripeServices)
         {
             _orderRepo = orderRepo;
             _helpers = helpers;
+            _stripeServices = stripeServices;
+        }
+
+        public async Task<string> ConfirmOrder(Guid orderId)
+        {
+            Order order = await GetOrderById(orderId);
+
+            return await _stripeServices.Checkout(order);
         }
 
         public async Task<Order> CreateOrder(CreateOrderDto order)

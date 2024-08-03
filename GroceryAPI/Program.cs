@@ -4,6 +4,7 @@ using Core.Helpers;
 using Core.Services;
 using Core.Services_contracts;
 using Infrastructure.DB;
+using Infrastructure.External_apis;
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Sieve.Models;
 using Sieve.Services;
+using Stripe;
 using System.Text;
 namespace GroceryAPI
 {
@@ -52,6 +54,7 @@ namespace GroceryAPI
             builder.Services.AddScoped<IReviewServices, ReviewServices>();
             builder.Services.AddScoped<ServicesHelpers>();
             builder.Services.AddScoped<ISieveProcessor, SieveProcessor>();
+            builder.Services.AddScoped<IStripeServices, StripeServices>();
 
             builder.Services.Configure<SieveOptions>(builder.Configuration.GetSection("Sieve"));
 
@@ -117,6 +120,9 @@ namespace GroceryAPI
 
             // Configure the HTTP request pipeline.
             app.UseHttpsRedirection();
+
+            // Configure Stripe
+            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 
             // Configure authorization and authentication.
             app.UseAuthentication();

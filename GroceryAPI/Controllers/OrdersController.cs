@@ -64,5 +64,23 @@ namespace GroceryAPI.Controllers
             if (!isDeleted) return Problem("ID is not found or invalid", statusCode: 400);
             return NoContent();
         }
+
+        [HttpPost("confirm/{id}")]
+        public async Task<IActionResult> Confirm(Guid id)
+        {
+            try
+            {
+                string checkoutUrl = await _orderServices.ConfirmOrder(id);
+                return Ok(new
+                {
+                    Message = "Navigate to the checkout url to complete the purchase",
+                    CheckoutURL = checkoutUrl,
+                });
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message, statusCode: 400);
+            }
+        }
     }
 }
