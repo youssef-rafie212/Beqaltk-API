@@ -3,7 +3,6 @@ using Core.Domain.Repository_contracts;
 using Core.DTO.AccountDtos;
 using Core.Services_contracts;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,15 +13,13 @@ namespace Core.Services
 
     public class JwtServices : IJwtServices
     {
-        private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ITokenRepository _tokenRepository;
-        public JwtServices(IConfiguration configuration,
+        public JwtServices(
                 UserManager<ApplicationUser> userManager,
                 ITokenRepository tokenRepository
             )
         {
-            _configuration = configuration;
             _userManager = userManager;
             _tokenRepository = tokenRepository;
         }
@@ -38,7 +35,7 @@ namespace Core.Services
             DateTime expires = DateTime.UtcNow.AddMonths(1);
 
             // Secret key. 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]!));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("BEQALTK_DEV_JWT_SECRET")!));
 
             // Signin credentials.
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
@@ -64,7 +61,7 @@ namespace Core.Services
             SecurityTokenDescriptor descriptor = new()
             {
                 Subject = new ClaimsIdentity(claims),
-                Issuer = _configuration["JWT:Issuer"],
+                Issuer = Environment.GetEnvironmentVariable("BEQALTK_DEV_JWT_ISSUER"),
                 Expires = expires,
                 SigningCredentials = credentials,
             };

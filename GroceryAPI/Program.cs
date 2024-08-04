@@ -56,12 +56,11 @@ namespace GroceryAPI
             builder.Services.AddScoped<ISieveProcessor, SieveProcessor>();
             builder.Services.AddScoped<IPaymentsServices, PaymentsServices>();
             builder.Services.AddScoped<IDeliveryServices, DeliveryServices>();
-
             builder.Services.Configure<SieveOptions>(builder.Configuration.GetSection("Sieve"));
 
             builder.Services.AddDbContext<AppDBContext>(opt =>
             {
-                opt.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+                opt.UseSqlServer(Environment.GetEnvironmentVariable("BEQALTK_DEV_DB_DEFAULT_URL"));
             });
 
             builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
@@ -81,11 +80,13 @@ namespace GroceryAPI
                 opt.TokenValidationParameters = new TokenValidationParameters()
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = builder.Configuration["JWT:Issuer"],
+                    ValidIssuer = Environment.GetEnvironmentVariable("BEQALTK_DEV_JWT_ISSUER")!,
                     ValidateAudience = false,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]!)),
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("BEQALTK_DEV_JWT_SECRET")!)
+                        ),
                 };
 
                 opt.Events = new JwtBearerEvents()
@@ -119,11 +120,11 @@ namespace GroceryAPI
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            app.UseHttpsRedirection();
-
             // Configure Stripe
-            StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
+            StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("BEQALTK_DEV_STRIPE_SECRET");
+
+            // CORS
+            app.UseCors();
 
             // Configure authorization and authentication.
             app.UseAuthentication();

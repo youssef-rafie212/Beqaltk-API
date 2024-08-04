@@ -51,6 +51,7 @@ namespace GroceryAPI.Controllers
                 PhoneNumber = signupDto.Phone,
                 City = signupDto.City,
                 Address = signupDto.Address,
+                PostalCode = signupDto.PostalCode ?? 0,
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, signupDto.Password!);

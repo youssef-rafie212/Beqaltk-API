@@ -22,12 +22,16 @@ namespace Core.Services
                 Host = smtpSettings["Host"]!,
                 Port = int.Parse(smtpSettings["Port"]!),
                 EnableSsl = Convert.ToBoolean(smtpSettings["EnableSsl"]!),
-                Credentials = new NetworkCredential() { UserName = smtpSettings["Username"], Password = smtpSettings["Password"] }
+                Credentials = new NetworkCredential()
+                {
+                    UserName = Environment.GetEnvironmentVariable("BEQALTK_DEV_EMAIL"),
+                    Password = Environment.GetEnvironmentVariable("BEQALTK_DEV_PASSWORD")
+                }
             };
 
             MailMessage mailMessage = new()
             {
-                From = new MailAddress(smtpSettings["Username"]!, "Beqaltk App"),
+                From = new MailAddress(Environment.GetEnvironmentVariable("BEQALTK_DEV_EMAIL")!, "Beqaltk App"),
                 Subject = subject,
                 Body = message
             };
