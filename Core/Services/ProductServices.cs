@@ -66,6 +66,10 @@ namespace Core.Services
             Product product = await GetProductById(productId);
             List<Product> similarProducts = await GetAllProductsForCategory(product.CategoryId);
             List<Product> selectedProducts = _helpers.GetRandomElements(similarProducts, 3);
+            while (selectedProducts.Contains(product))
+            {
+                selectedProducts = _helpers.GetRandomElements(similarProducts, 3);
+            }
             return selectedProducts;
         }
 

@@ -1,7 +1,10 @@
-﻿using Core.DTO.ReviewsDtos;
+﻿using Core.Domain.Entities;
+using Core.DTO.ReviewsDtos;
 using Core.Services_contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sieve.Models;
+using Sieve.Services;
 
 namespace GroceryAPI.Controllers
 {
@@ -11,18 +14,21 @@ namespace GroceryAPI.Controllers
     public class ReviewsController : ControllerBase
     {
         private readonly IReviewServices _services;
+        private readonly ISieveProcessor _sieveProcessor;
 
-        public ReviewsController(IReviewServices services)
+        public ReviewsController(IReviewServices services, ISieveProcessor sieveProcessor)
         {
             _services = services;
+            _sieveProcessor = sieveProcessor;
         }
 
         [HttpGet("product/{id}")]
-        public async Task<IActionResult> GetAllForProduct(Guid id)
+        public async Task<IActionResult> GetAllForProduct(Guid id, [FromQuery] SieveModel sieveModel)
         {
             try
             {
-                return Ok(await _services.GetAllReviewsForProduct(id));
+                List<Review> reviews = await _services.GetAllReviewsForProduct(id);
+                return Ok(_sieveProcessor.Apply(sieveModel, reviews.AsQueryable()));
             }
             catch (Exception ex)
             {
