@@ -3,6 +3,7 @@ using Core.Domain.Repository_contracts;
 using Core.Helpers;
 using Core.Services;
 using Core.Services_contracts;
+using GroceryAPI.Middlewares;
 using Infrastructure.DB;
 using Infrastructure.External_apis;
 using Infrastructure.Repositories;
@@ -23,10 +24,7 @@ namespace GroceryAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers().AddJsonOptions(options =>
-            // Handle the circular references
             options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
             builder.Services.AddScoped<IJwtServices, JwtServices>();
@@ -120,17 +118,12 @@ namespace GroceryAPI
 
             var app = builder.Build();
 
-            // Configure Stripe
             StripeConfiguration.ApiKey = Environment.GetEnvironmentVariable("BEQALTK_DEV_STRIPE_SECRET");
 
-            // CORS
+            app.UseCustomExceptionHandlerMiddleware();
             app.UseCors();
-
-            // Configure authorization and authentication.
             app.UseAuthentication();
             app.UseAuthorization();
-
-            // Routing
             app.MapControllers();
 
             app.Run();
