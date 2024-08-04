@@ -31,7 +31,7 @@ To get started with this project, follow these steps:
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/yourusername/yourprojectname.git
+   git clone https://github.com/youssef-rafie212/Beqaltk-API.git
    ```
 2. **Navigate to the project directory**
 
@@ -40,7 +40,7 @@ To get started with this project, follow these steps:
 	```bash
 	dotnet restore
 	```
-1. 
+ 
  ### Configuration
 
  **The application uses environment variables for configuration. Set the following environment variables as needed:**
