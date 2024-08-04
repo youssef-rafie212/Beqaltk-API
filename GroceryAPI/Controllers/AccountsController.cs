@@ -48,7 +48,9 @@ namespace GroceryAPI.Controllers
             {
                 UserName = signupDto.Username,
                 Email = signupDto.Email,
-                PhoneNumber = signupDto.Phone
+                PhoneNumber = signupDto.Phone,
+                City = signupDto.City,
+                Address = signupDto.Address,
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, signupDto.Password!);

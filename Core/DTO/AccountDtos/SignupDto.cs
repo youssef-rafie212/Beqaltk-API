@@ -18,6 +18,12 @@ namespace Core.DTO.AccountDtos
         public string? Phone { get; set; }
 
         [Required]
+        public string? City { get; set; }
+
+        [Required]
+        public string? Address { get; set; }
+
+        [Required]
         public string? Password { get; set; }
 
         [Required]
