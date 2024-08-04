@@ -33,8 +33,6 @@ namespace Core.Domain.Entities
         [Sieve(CanFilter = true)]
         public Guid CategoryId { get; set; }
 
-        public Category? Category { get; set; }
-
         public IEnumerable<Review>? Reviews { get; set; }
     }
 }
