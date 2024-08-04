@@ -142,7 +142,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.CartItem", b =>
@@ -166,7 +166,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems", (string)null);
+                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Category", b =>
@@ -186,7 +186,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
@@ -257,7 +257,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExpiredTokens", (string)null);
+                    b.ToTable("ExpiredTokens");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.FavouritesList", b =>
@@ -274,7 +274,7 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("FavouritesLists", (string)null);
+                    b.ToTable("FavouritesLists");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.FavouritesListItem", b =>
@@ -295,7 +295,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("FavouritesListItems", (string)null);
+                    b.ToTable("FavouritesListItems");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Order", b =>
@@ -320,7 +320,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.OrderItem", b =>
@@ -344,7 +344,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderItems", (string)null);
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Product", b =>
@@ -380,7 +380,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
 
                     b.HasData(
                         new
@@ -971,7 +971,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -1169,13 +1169,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("Core.Domain.Entities.Category", "Category")
+                    b.HasOne("Core.Domain.Entities.Category", null)
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.Review", b =>
