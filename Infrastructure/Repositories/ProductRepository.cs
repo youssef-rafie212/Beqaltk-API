@@ -35,9 +35,14 @@ namespace Infrastructure.Repositories
             return await _db.Products.ToListAsync();
         }
 
+        public async Task<List<Product>> GetAllProductsForCategory(Guid categoryId)
+        {
+            return await _db.Products.Where(p => p.CategoryId == categoryId).ToListAsync();
+        }
+
         public async Task<Product?> GetProductById(Guid productId)
         {
-            return await _db.Products.Include(p => p.Reviews).Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == productId);
+            return await _db.Products.Include(p => p.Reviews).FirstOrDefaultAsync(p => p.Id == productId);
         }
 
         public async Task<List<Product>> GetProductsBySearchString(string searchString)

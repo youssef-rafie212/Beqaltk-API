@@ -42,6 +42,13 @@ namespace Core.Services
             return await _productRepo.GetAllProducts();
         }
 
+        public async Task<List<Product>> GetAllProductsForCategory(Guid categoryId)
+        {
+            await _helpers.ThrowIfCategoryDoesntExist(categoryId);
+
+            return await _productRepo.GetAllProductsForCategory(categoryId);
+        }
+
         public async Task<Product> GetProductById(Guid productId)
         {
             Product? product = await _productRepo.GetProductById(productId);
@@ -52,6 +59,14 @@ namespace Core.Services
         public async Task<List<Product>> GetProductsBySearchString(string searchString)
         {
             return await _productRepo.GetProductsBySearchString(searchString);
+        }
+
+        public async Task<List<Product>> GetSimilarProducts(Guid productId)
+        {
+            Product product = await GetProductById(productId);
+            List<Product> similarProducts = await GetAllProductsForCategory(product.CategoryId);
+            List<Product> selectedProducts = _helpers.GetRandomElements(similarProducts, 3);
+            return selectedProducts;
         }
 
         public async Task<Product> UpdateProduct(UpdateProductDto product)

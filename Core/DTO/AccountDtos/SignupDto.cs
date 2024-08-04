@@ -24,6 +24,9 @@ namespace Core.DTO.AccountDtos
         public string? Address { get; set; }
 
         [Required]
+        public int PostalCode { get; set; }
+
+        [Required]
         public string? Password { get; set; }
 
         [Required]

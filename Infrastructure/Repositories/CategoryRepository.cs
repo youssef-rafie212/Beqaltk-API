@@ -32,12 +32,12 @@ namespace Infrastructure.Repositories
 
         public async Task<List<Category>> GetAllCategories()
         {
-            return await _appDBContext.Categories.Include(c => c.Products).ToListAsync();
+            return await _appDBContext.Categories.ToListAsync();
         }
 
         public async Task<Category?> GetCategoryById(Guid Id)
         {
-            Category? category = await _appDBContext.Categories.Include(c => c.Products).FirstOrDefaultAsync(c => c.Id == Id);
+            Category? category = await _appDBContext.Categories.FirstOrDefaultAsync(c => c.Id == Id);
 
             if (category == null) return null;
 

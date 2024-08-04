@@ -29,6 +29,33 @@ namespace GroceryAPI.Controllers
             return Ok(_sieveProcessor.Apply(sieveModel, allProducts.AsQueryable()));
         }
 
+        [HttpGet("category/{id}")]
+        public async Task<IActionResult> GetAllForCategory(Guid id, [FromQuery] SieveModel sieveModel)
+        {
+            try
+            {
+                List<Product> allProducts = await _services.GetAllProductsForCategory(id);
+                return Ok(_sieveProcessor.Apply(sieveModel, allProducts.AsQueryable()));
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message, statusCode: 400);
+            }
+        }
+
+        [HttpGet("similar/{id}")]
+        public async Task<IActionResult> GetSimilarProducts(Guid id)
+        {
+            try
+            {
+                return Ok(await _services.GetSimilarProducts(id));
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message, statusCode: 400);
+            }
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id)
         {

@@ -99,5 +99,21 @@ namespace Core.Helpers
             Review? review = await _reviewRepo.GetReviewById(reviewId);
             if (review == null) throw new Exception("Review doesn't exist");
         }
+
+        public List<T> GetRandomElements<T>(List<T> list, int numberOfElements)
+        {
+            if (list == null || list.Count == 0)
+            {
+                throw new ArgumentException("The list cannot be null or empty.");
+            }
+
+            if (numberOfElements <= 0 || numberOfElements > list.Count)
+            {
+                throw new ArgumentException("The number of elements to retrieve must be greater than 0 and less than or equal to the list count.");
+            }
+
+            Random random = new Random();
+            return list.OrderBy(x => random.Next()).Take(numberOfElements).ToList();
+        }
     }
 }
