@@ -9,7 +9,7 @@ namespace GroceryAPI.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return Ok("Welcome to beqaltk, see the documentation at ... to use the API");
+            return Ok("Welcome to beqaltk, see the documentation at https://documenter.getpostman.com/view/29387971/2sA3rwNa6e to use the API");
         }
     }
 }
