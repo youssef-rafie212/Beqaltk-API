@@ -69,7 +69,7 @@ namespace Infrastructure.External_apis
 
             if (orderItems == null) throw new Exception("Order must have atleast on order item");
 
-            string domain = "https://localhost:7222/";
+            string domain = "http://localhost:5012/";
 
             SessionCreateOptions options = new SessionCreateOptions
             {
