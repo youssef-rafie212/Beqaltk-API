@@ -33,7 +33,7 @@ namespace Infrastructure.Repositories
 
         public List<FavouritesListItem> GetAllFavouritesListItemsForFavouritesList(Guid favouritesListId)
         {
-            return _db.FavouritesListItems.Where(f => f.FavouritesListId == favouritesListId).ToList();
+            return _db.FavouritesListItems.Include("Product").Where(f => f.FavouritesListId == favouritesListId).ToList();
         }
 
         public async Task<FavouritesListItem?> GetFavouritesListItemById(Guid favListItemId)
