@@ -45,7 +45,7 @@ To get started with this project, follow these steps:
 
  **The application uses environment variables for configuration. Set the following environment variables as needed:**
 
- - BEQALTK_DEV_DB_DEFAULT_URL = "Your DB conncetion string"
+ - BEQALTK_DEV_DB_DEFAULT_URL = "Your DB connection string"
  - BEQALTK_DEV_JWT_SECRET = "Your JWT secret key"
  - BEQALTK_DEV_JWT_ISSUER = "Your JWT trusted issuer"
  - BEQALTK_DEV_STRIPE_SECRET = "Your Stripe secret key"
